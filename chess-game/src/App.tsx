@@ -79,8 +79,6 @@ const App: React.FC = () => {
                 <div>
                     <button style={marginStyle} onClick={start}>Start</button>
                     <button style={marginStyle} onClick={pause}>Pause</button>
-                    <button style={marginStyle} onClick={resume}>Resume</button>
-                    <button style={marginStyle} onClick={stop}>Stop</button>
                     <button style={marginStyle} onClick={reset}>Reset Timer</button>
 
                 </div>
