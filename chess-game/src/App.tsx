@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Timer from "react-compound-timer";
 // Lines 5-8: Bring in chessboard and chess.js stuff
@@ -20,6 +20,7 @@ const App: React.FC = () => {
     // Set initial state to FEN layout
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   );
+  const [gameState, setGS] = useState(true)
 
   const [fen, setFen] = useState(chess.fen());
 
@@ -41,10 +42,16 @@ const App: React.FC = () => {
     }
   };
 
+  useEffect(()=>{
+
+  },[chess.game_over()])
+
   return (
     <div className="flex-center" style={{display:'flex', justifyContent:"center"}}>
+
       <main>
-      <h1>Chess Game</h1>
+      {chess.game_over() ? <h1>Game Over</h1> : <h1>Chess Game</h1>}
+
       <Chessboard
         width={400}
         position={fen}
@@ -68,18 +75,27 @@ const App: React.FC = () => {
                     <span style={paddingStyle}><Timer.Minutes /> minutes</span>
                     <span style={paddingStyle}><Timer.Seconds /> seconds</span>
                 </div>
-                <div style={paddingStyle}>{timerState}</div>
                 <br />
                 <div>
                     <button style={marginStyle} onClick={start}>Start</button>
                     <button style={marginStyle} onClick={pause}>Pause</button>
                     <button style={marginStyle} onClick={resume}>Resume</button>
                     <button style={marginStyle} onClick={stop}>Stop</button>
-                    <button style={marginStyle} onClick={reset}>Reset</button>
+                    <button style={marginStyle} onClick={reset}>Reset Timer</button>
+
                 </div>
             </>
         )}
       </Timer>
+      <button style={marginStyle} onClick={()=>{
+        chess.reset()
+        chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+        setFen(chess.fen())
+      }}>Reset Game</button>
+      <button style={marginStyle} onClick={()=>{
+        chess.undo()
+        setFen(chess.fen())
+      }} >Rewind</button>
       </main>
     </div>
   );
