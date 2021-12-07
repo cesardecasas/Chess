@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+:root{
+  --main-color: rgb(39, 39, 39);
+  --desktop:1200px;
+  --laptop:1024px;
+  --tablet:768px;
+  --phone:480px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +43,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.icon{
+  color: white;
+  margin: 1%;
+  font-size: 2rem;
+}
+
+footer{
+  background-color: var(--main-color);
+  color: white;
+  text-align: center;
+
 }

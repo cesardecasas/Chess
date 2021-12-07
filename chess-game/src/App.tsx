@@ -4,6 +4,9 @@ import Timer from "react-compound-timer";
 // Lines 5-8: Bring in chessboard and chess.js stuff
 import Chessboard from "chessboardjsx";
 import { ChessInstance, ShortMove } from "chess.js";
+import Button from 'react-bootstrap/Button'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Chess = require("chess.js");
 
@@ -12,7 +15,7 @@ const paddingStyle = {
 }
 
 const marginStyle = {
-  margin: 5
+  margin: 5, 
 }
 
 const App: React.FC = () => {
@@ -20,13 +23,12 @@ const App: React.FC = () => {
     // Set initial state to FEN layout
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   );
-  const [gameState, setGS] = useState(true)
 
   const [fen, setFen] = useState(chess.fen());
 
   // Logic for the setting up the random computer move.
   const handleMove = (move: ShortMove) => {
-    // Line 29 validates the user move.
+    // next line validates the user move.
     if (chess.move(move)) {
       setTimeout(() => {
         const moves = chess.moves();
@@ -43,13 +45,15 @@ const App: React.FC = () => {
   };
 
   useEffect(()=>{
+    
 
-  },[chess.game_over()])
+  },[])
 
   return (
-    <div className="flex-center" style={{display:'flex', justifyContent:"center"}}>
+    <div className="flex-center" style={{display:'flex', justifyContent:"center", backgroundColor:'lightblue'}}>
 
       <main>
+        <p style={{marginTop:'15%'}}></p>
       {chess.game_over() ? <h1>Game Over</h1> : <h1>Chess Game</h1>}
 
       <Chessboard
@@ -77,24 +81,25 @@ const App: React.FC = () => {
                 </div>
                 <br />
                 <div>
-                    <button style={marginStyle} onClick={start}>Start</button>
-                    <button style={marginStyle} onClick={pause}>Pause</button>
-                    <button style={marginStyle} onClick={reset}>Reset Timer</button>
+                    <Button variant='dark' style={marginStyle} onClick={start}>Start</Button>
+                    <Button variant='dark' style={marginStyle} onClick={pause}>Pause</Button>
+                    <Button variant='dark' style={marginStyle} onClick={reset}>Reset Timer</Button>
 
                 </div>
             </>
         )}
       </Timer>
-      <button style={marginStyle} onClick={()=>{
+      <Button variant='dark' style={marginStyle} onClick={()=>{
         chess.reset()
         chess.load("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
         setFen(chess.fen())
-      }}>Reset Game</button>
-      <button style={marginStyle} onClick={()=>{
+      }}>Reset Game</Button>
+      <Button variant='dark' style={marginStyle} onClick={()=>{
         chess.undo()
         setFen(chess.fen())
-      }} >Rewind</button>
+      }} >Rewind</Button>
       </main>
+      
     </div>
   );
 };
