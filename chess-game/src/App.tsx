@@ -18,6 +18,9 @@ const marginStyle = {
   margin: 5, 
 }
 
+const whiteSquareGrey = '#a9a9a9'
+const blackSquareGrey = '#696969'
+
 const App: React.FC = () => {
   const [chess] = useState<ChessInstance>(
     // Set initial state to FEN layout
@@ -25,6 +28,9 @@ const App: React.FC = () => {
   );
 
   const [fen, setFen] = useState(chess.fen());
+  const [squareS, setSquareS] = useState({})
+  const [history, setHistory] = useState([])
+  const [pieceSquare, setPieceS] = useState('')
 
   // Logic for the setting up the random computer move.
   const handleMove = (move: ShortMove) => {
@@ -43,6 +49,26 @@ const App: React.FC = () => {
       setFen(chess.fen());
     }
   };
+
+  const onMouseOver = (square : string) => {
+
+    let moves = chess.moves({
+      square: square,
+      verbose: true
+    })
+
+    if (moves.length === 0) return;
+
+    let squaresToHighlight = [];
+    for (let i = 0; i < moves.length; i++) {
+      squaresToHighlight.push(moves[i].to);
+    } 
+  }
+
+
+
+
+  
 
   useEffect(()=>{
     
@@ -66,7 +92,7 @@ const App: React.FC = () => {
             from: move.sourceSquare,
             to: move.targetSquare,
             // This promotion attribute changes pawns to a queen if they reach the other side of the board.
-            promotion: "q",
+            promotion: "q", 
           })
         }
       />
